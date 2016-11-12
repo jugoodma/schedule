@@ -9,8 +9,10 @@ import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
+import java.util.Calendar;
 
 import javax.swing.JButton;
+import javax.swing.JComboBox;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
@@ -22,16 +24,15 @@ import control.Control;
 import model.Events;
 import model.Schedule;
 public class TerminalView extends JPanel implements KeyListener, MouseListener, ActionListener{
-	/**
-	 * 
-	 */
+	private String[] days = {"Sunday","Monday","Tuesday","Wednesday","thursday","friday","Saturday"};
 	private static final long serialVersionUID = 1L;
 	private JFrame window;
 	private JButton makeSchedule;
 	private JPanel timeInput, textInput,sInput, input;
-	private JTextField name, location,pname, ID;
+	private JTextField location,pname, ID;
 	private JSpinner sTime, eTime;
-	private JLabel start, end, lname, place, sID,sname;
+	private JComboBox<String> day;
+	private JLabel start, end, lname, place, sID,date;
 	Control c;
 	public TerminalView(Control con){
 		c=con;
@@ -40,7 +41,7 @@ public class TerminalView extends JPanel implements KeyListener, MouseListener, 
 		window.setLayout(new BorderLayout());
 		createInput();
 		window.add(this,BorderLayout.CENTER);
-		input.setPreferredSize(new Dimension(765,20));
+		//input.setPreferredSize(new Dimension(765,20));
 		window.add(input,BorderLayout.SOUTH);
 		window.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		window.pack();
@@ -57,8 +58,7 @@ public class TerminalView extends JPanel implements KeyListener, MouseListener, 
 		sInput = new JPanel();sInput.setLayout(new BorderLayout());sInput.setFocusable(false);
 		
 		
-		name = new JTextField(10);
-		name.addActionListener(this);
+
 		location = new JTextField(10);
 		location.addActionListener(this);
 		pname = new JTextField(10);
@@ -69,7 +69,9 @@ public class TerminalView extends JPanel implements KeyListener, MouseListener, 
 		end=new JLabel("End Time:");
 		lname=new JLabel("Event :");
 		place=new JLabel("Location: ");
-		
+		day = new JComboBox<String>(days);
+		day.setFocusable(false);
+		day.addActionListener(this);
 		JPanel a = new JPanel();a.setLayout(new BorderLayout());a.setFocusable(false);
 		JPanel b = new JPanel();b.setLayout(new BorderLayout());b.setFocusable(false);
 		JPanel c = new JPanel();c.setLayout(new BorderLayout());c.setFocusable(false);
@@ -77,12 +79,17 @@ public class TerminalView extends JPanel implements KeyListener, MouseListener, 
 		JPanel e = new JPanel();e.setLayout(new BorderLayout());e.setFocusable(false);
 		JPanel f = new JPanel();f.setLayout(new BorderLayout());f.setFocusable(false);
 		
-		
-		
-		sTime=  new JSpinner(new SpinnerDateModel());sTime.setFocusable(false);
-		sTime.setEditor(new JSpinner.DateEditor(sTime, "HH:mm"));
-		eTime=  new JSpinner(new SpinnerDateModel());eTime.setEditor(new JSpinner.DateEditor(eTime, "HH:mm"));
-		sname= new JLabel("Person Name: ");
+		SpinnerDateModel star = new SpinnerDateModel();
+		star.setCalendarField(Calendar.MINUTE);
+		SpinnerDateModel en = new SpinnerDateModel();
+		en.setCalendarField(Calendar.MINUTE);
+		sTime= new JSpinner();
+		eTime= new JSpinner();
+		sTime.setModel(star);
+		eTime.setModel(en);
+		sTime.setEditor(new JSpinner.DateEditor(sTime, "h:mm"));
+		eTime.setEditor(new JSpinner.DateEditor(eTime, "h:mm"));
+		date= new JLabel("Day Of Week ");
 		sID= new JLabel("ID NUmber: ");
 		makeSchedule = new JButton("New...");
 		
@@ -92,13 +99,13 @@ public class TerminalView extends JPanel implements KeyListener, MouseListener, 
 		a.add(eTime,BorderLayout.SOUTH);
 		b.add(end, BorderLayout.SOUTH);
 		b.add(start, BorderLayout.NORTH);
-		c.add(name,  BorderLayout.NORTH);
+		c.add(pname,  BorderLayout.NORTH);
 		c.add(location,  BorderLayout.SOUTH);
-		e.add(sname,  BorderLayout.NORTH);
+		e.add(date,  BorderLayout.NORTH);
 		e.add(sID,  BorderLayout.SOUTH);
 		d.add(place, BorderLayout.SOUTH);
 		d.add(lname, BorderLayout.NORTH);
-		f.add(pname, BorderLayout.NORTH);
+		f.add(day, BorderLayout.NORTH);
 		f.add(ID,BorderLayout.SOUTH);
 		
 		timeInput.add(a, BorderLayout.EAST);
@@ -150,9 +157,25 @@ public class TerminalView extends JPanel implements KeyListener, MouseListener, 
 	@Override
 	public void actionPerformed(ActionEvent arg0) {
 		if(arg0.getSource().equals(makeSchedule)){
+			try{
 			Schedule s= new Schedule();
-			
+			s.setID(Integer.parseInt(ID.getText()));
+			String st="";String et="";
+			if(sTime.getValue().toString().charAt(10)==' '){
+				st=sTime.getValue().toString().charAt(11)+""+sTime.getValue().toString().charAt(12)+sTime.getValue().toString().charAt(14)+sTime.getValue().toString().charAt(15);
+			}else{
+				st=sTime.getValue().toString().charAt(10)+""+sTime.getValue().toString().charAt(11)+sTime.getValue().toString().charAt(13)+sTime.getValue().toString().charAt(14);
+			}
+			if(eTime.getValue().toString().charAt(10)==' '){
+				et=sTime.getValue().toString().charAt(11)+""+sTime.getValue().toString().charAt(12)+sTime.getValue().toString().charAt(14)+sTime.getValue().toString().charAt(15);
+			}else{
+				et=sTime.getValue().toString().charAt(10)+""+sTime.getValue().toString().charAt(11)+sTime.getValue().toString().charAt(13)+sTime.getValue().toString().charAt(14);
+			}
+			s.addEvent(new Events(pname.getText(),st,et,location.getText(),day.getSelectedIndex()));
 			c.getIOS().saveSchedule(s);
+			}catch(Exception e){
+				
+			}
 		}
 	}
 

@@ -25,6 +25,13 @@ public class Events {
 		location = l;
 		date = d;
 	}
+	public Events(String n,String s, String e, String l, int d){
+		name = n;
+		startTime=Integer.parseInt(s);startString=""+s;
+		endTime=Integer.parseInt(e);endString=""+e;
+		location = l;
+		date = d;
+	}
 	public void setTime(String time){
 		startString=""+time.charAt(0)+time.charAt(1)+time.charAt(2)+time.charAt(3);
 		endString=""+time.charAt(4)+time.charAt(5)+time.charAt(6)+time.charAt(7);
