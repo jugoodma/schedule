@@ -173,6 +173,7 @@ public class TerminalView extends JPanel implements KeyListener, MouseListener, 
 			}
 			s.addEvent(new Events(pname.getText(),st,et,location.getText(),day.getSelectedIndex()));
 			c.getIOS().saveSchedule(s);
+			repaint();
 			}catch(Exception e){
 				
 			}
