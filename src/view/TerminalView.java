@@ -9,6 +9,7 @@ import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
+import java.text.SimpleDateFormat;
 import java.util.Calendar;
 
 import javax.swing.JButton;
@@ -79,18 +80,14 @@ public class TerminalView extends JPanel implements KeyListener, MouseListener, 
 		JPanel e = new JPanel();e.setLayout(new BorderLayout());e.setFocusable(false);
 		JPanel f = new JPanel();f.setLayout(new BorderLayout());f.setFocusable(false);
 		
-		SpinnerDateModel star = new SpinnerDateModel();
-		star.setCalendarField(Calendar.MINUTE);
-		star.setCalendarField(Calendar.HOUR_OF_DAY);
-		SpinnerDateModel en = new SpinnerDateModel();
-		en.setCalendarField(Calendar.MINUTE);
-		star.setCalendarField(Calendar.HOUR_OF_DAY);
-		sTime= new JSpinner();
-		eTime= new JSpinner();
-		sTime.setModel(star);
-		eTime.setModel(en);
-		sTime.setEditor(new JSpinner.DateEditor(sTime, "h:mm"));
-		eTime.setEditor(new JSpinner.DateEditor(eTime, "h:mm"));
+		SpinnerDateModel model = new SpinnerDateModel();
+		model.setCalendarField(Calendar.MINUTE);
+
+		eTime=  new JSpinner(new SpinnerDateModel());eTime.setFocusable(false);
+		eTime.setEditor(new JSpinner.DateEditor(eTime, "HH:mm"));
+		sTime=  new JSpinner(new SpinnerDateModel());sTime.setFocusable(false);
+		sTime.setEditor(new JSpinner.DateEditor(sTime, "HH:mm"));
+		//eTime=  new JSpinner(new SpinnerDateModel());eTime.setEditor(new JSpinner.DateEditor(eTime, "HH:mm"));
 		date= new JLabel("Day Of Week ");
 		sID= new JLabel("ID NUmber: ");
 		makeSchedule = new JButton("New...");
@@ -169,9 +166,9 @@ public class TerminalView extends JPanel implements KeyListener, MouseListener, 
 				st=sTime.getValue().toString().charAt(10)+""+sTime.getValue().toString().charAt(11)+sTime.getValue().toString().charAt(13)+sTime.getValue().toString().charAt(14);
 			}
 			if(eTime.getValue().toString().charAt(10)==' '){
-				et=sTime.getValue().toString().charAt(11)+""+sTime.getValue().toString().charAt(12)+sTime.getValue().toString().charAt(14)+sTime.getValue().toString().charAt(15);
+				et=eTime.getValue().toString().charAt(11)+""+eTime.getValue().toString().charAt(12)+eTime.getValue().toString().charAt(14)+eTime.getValue().toString().charAt(15);
 			}else{
-				et=sTime.getValue().toString().charAt(10)+""+sTime.getValue().toString().charAt(11)+sTime.getValue().toString().charAt(13)+sTime.getValue().toString().charAt(14);
+				et=eTime.getValue().toString().charAt(10)+""+eTime.getValue().toString().charAt(11)+eTime.getValue().toString().charAt(13)+eTime.getValue().toString().charAt(14);
 			}
 			s.addEvent(new Events(pname.getText(),st,et,location.getText(),day.getSelectedIndex()));
 			c.getIOS().saveSchedule(s);
