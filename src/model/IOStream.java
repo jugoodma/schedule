@@ -51,8 +51,8 @@ public class IOStream {
 			Writer output;
 		    output = new BufferedWriter(new FileWriter(s.getID()+".txt", true));
 			File f = new File(s.getID()+".txt");
-			if(!f.exists()) { 
-				output.append(s.getName());
+			if(f.length() == 0) { 
+				output.append(s.getName() + "\n");
 			}
 		    for(int i =0; i<s.getSchedule().size();i++){
 		    	output.append(s.getSchedule().get(i).getName() + "\n");
