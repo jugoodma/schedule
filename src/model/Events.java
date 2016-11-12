@@ -35,8 +35,19 @@ public class Events {
 	public void setTime(String time){
 		startString=""+time.charAt(0)+time.charAt(1)+time.charAt(2)+time.charAt(3);
 		endString=""+time.charAt(4)+time.charAt(5)+time.charAt(6)+time.charAt(7);
-		startTime= Integer.parseInt(""+time.charAt(0)+time.charAt(1)+time.charAt(2)+time.charAt(3));
-		endTime= Integer.parseInt(""+time.charAt(4)+time.charAt(5)+time.charAt(6)+time.charAt(7));
+		if(startString.length()==4){
+			startTime= Integer.parseInt(""+time.charAt(0)+time.charAt(1)+time.charAt(2)+time.charAt(3));
+			endTime= Integer.parseInt(""+time.substring(4));
+		}else if(startString.length()==3){
+			startTime= Integer.parseInt(""+time.charAt(0)+time.charAt(1)+time.charAt(2));
+			endTime= Integer.parseInt(""+time.substring(3));
+		}else if(startString.length()==2){
+			startTime= Integer.parseInt(""+time.charAt(0)+time.charAt(1));
+			endTime= Integer.parseInt(""+time.substring(2));
+		}else if(startString.length()==1){
+			startTime= Integer.parseInt(""+time.charAt(0));
+			endTime= Integer.parseInt(""+time.substring(1));
+		}
 	}
 	public void setLocation(String l){
 		location=l;
