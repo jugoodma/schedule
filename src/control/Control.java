@@ -12,9 +12,8 @@ public class Control {
 		input = new IOStream();
 		IDs=new ArrayList<String>();
 		tc = new TimeCheck();
-		//IDs.add("1001");
-		//IDs.add("1000");
-		IDs.add("1003");
+		IDs.add("1001");
+		IDs.add("1000");
 	}
 	public Schedule getSchedule(int ID){
 		return input.loadSchedule(ID);
@@ -24,6 +23,9 @@ public class Control {
 	}
 	public ArrayList<String> getIDs(){
 		return IDs;
+	}
+	public void addID(String s){
+		IDs.add(s);
 	}
 	public IOStream getIOS(){
 		return input;

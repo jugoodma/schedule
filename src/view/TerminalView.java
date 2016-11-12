@@ -128,13 +128,13 @@ public class TerminalView extends JPanel implements KeyListener, MouseListener, 
 	
 	private void paintBackground(Graphics g){
 		g.setColor(Color.BLACK);
-		g.drawRect(25, 75, 100,648);
-		g.drawRect(125, 75, 100, 648);
-		g.drawRect(225, 75, 100, 648);
-		g.drawRect(325, 75, 100, 648);
-		g.drawRect(425, 75, 100, 648);
-		g.drawRect(525, 75, 100, 648);
-		g.drawRect(625, 75, 100, 648);
+		g.drawRect(24, 75, 100,648);
+		g.drawRect(124, 75, 100, 648);
+		g.drawRect(224, 75, 100, 648);
+		g.drawRect(324, 75, 100, 648);
+		g.drawRect(424, 75, 100, 648);
+		g.drawRect(524, 75, 100, 648);
+		g.drawRect(624, 75, 100, 648);
 	}
 	private void paintSchedule(Graphics g){
 		g.setColor(Color.BLUE);
@@ -172,6 +172,7 @@ public class TerminalView extends JPanel implements KeyListener, MouseListener, 
 			}
 			s.addEvent(new Events(pname.getText(),st,et,location.getText(),day.getSelectedIndex()));
 			c.getIOS().saveSchedule(s);
+			c.addID(s.getID()+"");
 			repaint();
 			}catch(Exception e){
 				
