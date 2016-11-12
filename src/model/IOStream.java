@@ -50,8 +50,8 @@ public class IOStream {
 		    for(int i =0; i<s.getSchedule().size();i++){
 				fout.println(s.getSchedule().get(i).getName());
 				fout.println(s.getSchedule().get(i).getTime());
-				fout.println(s.getSchedule().get(i).getLocation());
 				fout.println(s.getSchedule().get(i).getDate());
+				fout.println(s.getSchedule().get(i).getLocation());
 			}
 		    fout.close();
 		} catch (Exception e) {
