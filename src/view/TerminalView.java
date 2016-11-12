@@ -81,8 +81,10 @@ public class TerminalView extends JPanel implements KeyListener, MouseListener, 
 		
 		SpinnerDateModel star = new SpinnerDateModel();
 		star.setCalendarField(Calendar.MINUTE);
+		star.setCalendarField(Calendar.HOUR_OF_DAY);
 		SpinnerDateModel en = new SpinnerDateModel();
 		en.setCalendarField(Calendar.MINUTE);
+		star.setCalendarField(Calendar.HOUR_OF_DAY);
 		sTime= new JSpinner();
 		eTime= new JSpinner();
 		sTime.setModel(star);
