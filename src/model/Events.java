@@ -71,7 +71,7 @@ public class Events {
 		return endString;
 	}
 	public String getTime(){
-		return ""+startTime+""+endTime;
+		return startString+endString;
 	}
 	public String getLocation(){
 		return location;
@@ -90,7 +90,7 @@ public class Events {
 		case(3):return "Wednesday";
 		case(4):return "Thursday";
 		case(5):return "Friday";
-		case(6):return "Satday";
+		case(6):return "Saturday";
 		default:return "Error";
 		}
 	}
