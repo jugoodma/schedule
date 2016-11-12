@@ -1,10 +1,13 @@
 package model;
+
 import java.io.BufferedReader;
+import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
-import java.io.PrintWriter;
+import java.io.FileWriter;
+import java.io.Writer;
 
 public class IOStream {
 	public Schedule loadSchedule(int ID){
@@ -45,15 +48,19 @@ public class IOStream {
     }
 	public void saveSchedule(Schedule s){
 		try{
-		    PrintWriter fout = new PrintWriter(s.getID()+".txt", "UTF-8");
-		    fout.println(s.getName());
-		    for(int i =0; i<s.getSchedule().size();i++){
-				fout.println(s.getSchedule().get(i).getName());
-				fout.println(s.getSchedule().get(i).getTime());
-				fout.println(s.getSchedule().get(i).getDate());
-				fout.println(s.getSchedule().get(i).getLocation());
+			Writer output;
+		    output = new BufferedWriter(new FileWriter(s.getID()+".txt", true));
+			File f = new File(s.getID()+".txt");
+			if(!f.exists()) { 
+				output.append(s.getName());
 			}
-		    fout.close();
+		    for(int i =0; i<s.getSchedule().size();i++){
+		    	output.append(s.getSchedule().get(i).getName() + "\n");
+		    	output.append(s.getSchedule().get(i).getTime() + "\n");
+		    	output.append(s.getSchedule().get(i).getDate() + "\n");
+		    	output.append(s.getSchedule().get(i).getLocation() + "\n");
+			}
+		    output.close();
 		} catch (Exception e) {
 		   // do something
 		}
